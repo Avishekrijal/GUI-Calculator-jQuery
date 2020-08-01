@@ -6,41 +6,55 @@ jQuery(document).ready(function(){
 
 	$('#one').click(function(){
 		calculation(1);
+		clicked('#one');
 	});
 	$('#two').click(function(){
 		calculation(2);
+		clicked('#two');
 	});
 	$('#three').click(function(){
 		calculation(3);
+		clicked('#three');
 	});
 	$('#four').click(function(){
 		calculation(4);
+		clicked('#four');
 	});
 	$('#five').click(function(){
 		calculation(5);
+		clicked('#five');
 	});
 	$('#six').click(function(){
 		calculation(6);
+		clicked('#six');
 	});
 	$('#seven').click(function(){
 		calculation(7);
+		clicked('#seven');
 	});
 	$('#eight').click(function(){
 		calculation(8);
+		clicked('#eight');
 	});
 	$('#nine').click(function(){
 		calculation(9);
+		clicked('#nine');
 	});
 	$('#zero').click(function(){
 		calculation(0);
+		clicked('#zero');
 	});
 	$('#plus').click(function() {
+		clicked('#plus');
+
 		if (result === 0) {
 			operatorHold = 1;
 			$('#operator').text(' + ');
 		}
 	});
 	$('#minus').click(function() {
+		clicked('#minus');
+
 		if (result === 0 && firstOperands != 0) {
 			operatorHold = 2;
 			$('#operator').html(' &minus; ');
@@ -49,18 +63,24 @@ jQuery(document).ready(function(){
 		}
 	});
 	$('#multiply').click(function() {
+		clicked('#multiply');
+
 		if (result === 0) {
 			operatorHold = 3;
 			$('#operator').text(' x ');
 		}
 	});
 	$('#divide').click(function() {
+		clicked('#divide');
+
 		if (result === 0) {
 			operatorHold = 4;
 			$('#operator').html(' &div; ');
 		}
 	});
 	$('#equals').click(function() {
+		clicked('#equals');
+
 		if (result != 0) {
 			$('#operands1').text(result);
 			firstOperands = result;
@@ -79,7 +99,7 @@ jQuery(document).ready(function(){
 			secondOperands = 0;
 			result = 0;
 		}else {
-			$('#answer').text(' ');
+			$('#answer').text('Answer');
 			firstOperands = 0;
 			secondOperands = 0;
 			operatorHold = 0;
@@ -88,13 +108,15 @@ jQuery(document).ready(function(){
 			$('#dummyText').show();
 		}
 	});
-	$('#answer').dblclick(function() {
+	$('#cls').click(function() {
+		clicked('#cls');
+
 		firstOperands = 0;
 		secondOperands = 0;
 		$('#operands1,#operands2,#operator').hide();
 		$('#dummyText').show();
 		result = 0;
-		$('#answer').text('00');
+		$('#answer').text('Answer');
 		operatorHold = 0;
 	});
 
@@ -154,11 +176,32 @@ jQuery(document).ready(function(){
 				$('#answer').text(result);
 				break;
 			case 4:
-				result = firstOperands / secondOperands;
-				$('#answer').text(result);
+				if (secondOperands == 0) {
+					$('#answer').html('<code>Error: 400 Bad Request</code>');
+					firstOperands = 0;
+					secondOperands = 0;
+					result = 0;
+				}else{
+					result = firstOperands / secondOperands;
+					$('#answer').text(result);
+				}
 				break;
 			default:
 				console.log('ERROR: Invalid operator type !!!');
 		}
+	}
+
+	function clicked(id){
+		$(id).css({
+			'box-shadow': 'inset 4px 4px 4px #dfe0cc',
+			'border-radius': '15px'
+		});
+
+		setTimeout(function(){
+			$(id).css({
+				'box-shadow': 'none',
+				'border-radius': 'none'
+			})
+		},200);
 	}
 });
